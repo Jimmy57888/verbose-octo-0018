@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <title>MP3播放器</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            min-height: 100vh;
+            margin: 0;
+            padding: 20px;
+            background-color: #f0f0f0;
+        }
+
+        .player-container {
+            background-color: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+            margin-top: 50px;
+        }
+
+        audio {
+            width: 300px;
+            margin: 20px 0;
+        }
+
+        h1 {
+            color: #333;
+            margin-bottom: 30px;
+        }
+
+        .audio-info {
+            text-align: center;
+            margin-top: 10px;
+            color: #666;
+        }
+    </style>
+</head>
+<body>
+    <h1>MP3播放器</h1>
+    
+    <div class="player-container">
+        <audio id="myAudio" controls>
+            <source src="sound.mp3" type="audio/mpeg">
+            你的浏览器不支持音频播放
+        </audio>
+        <div class="audio-info">
+            <p id="currentTime">当前时间: 0:00</p>
+            <p id="duration">总时长: 0:00</p>
+        </div>
+    </div>
+
+    <script>
+        const audio = document.getElementById('myAudio');
+        const currentTimeElement = document.getElementById('currentTime');
+        const durationElement = document.getElementById('duration');
+
+        // 更新时长显示
+        audio.addEventListener('loadedmetadata', function() {
+            const duration = formatTime(audio.duration);
+            durationElement.textContent = `总时长: ${duration}`;
+        });
+
+        // 更新时间显示
+        audio.addEventListener('timeupdate', function() {
+            currentTimeElement.textContent = `当前时间: ${formatTime(audio.currentTime)}`;
+        });
+
+        // 时间格式化函数
+        function formatTime(seconds) {
+            const minutes = Math.floor(seconds / 60);
+            const remainingSeconds = Math.floor(seconds % 60);
+            return `${minutes}:${remainingSeconds.toString().padStart(2, '0')}`;
+        }
+
+        // 自动显示当前时间
+        function updateClock() {
+            const now = new Date();
+            document.title = `MP3播放器 - ${now.toLocaleTimeString()}`;
+        }
+        setInterval(updateClock, 1000);
+        updateClock();
+    </script>
+</body>
+</html>
