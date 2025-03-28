@@ -2,259 +2,88 @@
 <html lang="zh-CN">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>网站</title>
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+    <title>MP3播放器</title>
     <style>
-        :root {
-            --primary-color: #6366f1;
-            --secondary-color: #4f46e5;
-            --accent-color: #f59e0b;
-            --dark-color: #1e293b;
-            --light-color: #f8fafc;
-        }
-
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            font-family: 'Poppins', sans-serif;
-        }
-
         body {
-            line-height: 1.7;
-            color: var(--dark-color);
-            background: var(--light-color);
-        }
-
-        .header {
-            background: rgba(255,255,255,0.95);
-            backdrop-filter: blur(10px);
-            padding: 1rem 2rem;
-            position: fixed;
-            width: 100%;
-            top: 0;
-            box-shadow: 0 2px 15px rgba(0,0,0,0.1);
-            z-index: 1000;
-        }
-
-        .nav {
-            max-width: 1200px;
-            margin: 0 auto;
+            font-family: Arial, sans-serif;
             display: flex;
-            justify-content: space-between;
+            flex-direction: column;
             align-items: center;
+            min-height: 100vh;
+            margin: 0;
+            padding: 20px;
+            background-color: #f0f0f0;
         }
 
-        .logo {
-            font-size: 1.8rem;
-            font-weight: 600;
-            color: var(--primary-color);
-            text-decoration: none;
-            transition: transform 0.3s;
+        .player-container {
+            background-color: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+            margin-top: 50px;
         }
 
-        .logo:hover {
-            transform: scale(1.05);
+        audio {
+            width: 300px;
+            margin: 20px 0;
         }
 
-        .nav-links {
-            display: flex;
-            gap: 2.5rem;
+        h1 {
+            color: #333;
+            margin-bottom: 30px;
         }
 
-        .nav a {
-            text-decoration: none;
-            color: var(--dark-color);
-            font-weight: 500;
-            padding: 0.5rem 1rem;
-            border-radius: 8px;
-            transition: all 0.3s;
-        }
-
-        .nav a:hover {
-            background: rgba(99, 102, 241, 0.1);
-            color: var(--primary-color);
-        }
-
-        .hero {
-            height: 100vh;
-            display: flex;
-            align-items: center;
-            justify-content: center;
+        .audio-info {
             text-align: center;
-            background: linear-gradient(45deg, #6366f1, #4f46e5);
-            padding: 2rem;
-            position: relative;
-            overflow: hidden;
-        }
-
-        .hero::after {
-            content: '';
-            position: absolute;
-            width: 200%;
-            height: 200%;
-            background: url('data:image/svg+xml,<svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg"><circle cx="50" cy="50" r="45" fill="none" stroke="white" stroke-width="2" opacity="0.1"/></svg>');
-animation: rotate 30s linear infinite;
-        }
-
-        @keyframes rotate {
-            from { transform: rotate(0deg); }
-            to { transform: rotate(360deg); }
-        }
-
-        .hero-content {
-            max-width: 800px;
-            position: relative;
-            z-index: 1;
-        }
-
-        .hero h1 {
-            font-size: 3.5rem;
-            margin-bottom: 1.5rem;
-            color: white;
-            line-height: 1.2;
-            animation: slideUp 1s ease;
-        }
-
-        .hero p {
-            font-size: 1.25rem;
-            color: rgba(255,255,255,0.9);
-            margin-bottom: 2.5rem;
-            animation: slideUp 1s ease 0.2s;
-            animation-fill-mode: backwards;
-        }
-
-        @keyframes slideUp {
-            from {
-                opacity: 0;
-                transform: translateY(30px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-
-        .button {
-            display: inline-flex;
-            align-items: center;
-            gap: 0.8rem;
-            padding: 1rem 2.5rem;
-            background: var(--accent-color);
-            color: white;
-            text-decoration: none;
-            border-radius: 50px;
-            transition: all 0.3s;
-            font-weight: 500;
-            box-shadow: 0 5px 15px rgba(245,158,11,0.3);
-            animation: slideUp 1s ease 0.4s;
-            animation-fill-mode: backwards;
-        }
-
-        .button:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 8px 25px rgba(245,158,11,0.4);
-        }
-
-        .features {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-            gap: 2rem;
-            margin-top: 4rem;
-        }
-
-        .feature {
-            padding: 2.5rem;
-            background: white;
-            border-radius: 20px;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.08);
-            transition: transform 0.3s, box-shadow 0.3s;
-            text-align: center;
-        }
-
-        .feature:hover {
-            transform: translateY(-10px);
-            box-shadow: 0 15px 40px rgba(0,0,0,0.12);
-        }
-
-        .feature-icon {
-            width: 70px;
-            height: 70px;
-            background: linear-gradient(45deg, var(--primary-color), var(--secondary-color));
-            border-radius: 18px;
-            margin: 0 auto 1.5rem;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: white;
-            font-size: 1.8rem;
-        }
-
-        footer {
-            background: var(--dark-color);
-            color: white;
-            padding: 4rem 2rem;
-            margin-top: 6rem;
-        }
-
-        @media (max-width: 768px) {
-            .hero h1 {
-                font-size: 2.5rem;
-            }
-            
-            .nav-links {
-                display: none;
-            }
+            margin-top: 10px;
+            color: #666;
         }
     </style>
 </head>
 <body>
-    <header class="header">
-        <nav class="nav">
-            WebStyle
-            <div class="nav-links">
-                首页
-                产品
-                服务
-                联系
-            </div>
-        </nav>
-    </header>
+    <h1>MP3播放器</h1>
+    
+    <div class="player-container">
+        <audio id="myAudio" controls>
+            <source src="sound.mp3" type="audio/mpeg">
+            你的浏览器不支持音频播放
+        </audio>
+        <div class="audio-info">
+            <p id="currentTime">当前时间: 0:00</p>
+            <p id="duration">总时长: 0:00</p>
+        </div>
+    </div>
 
-    <main>
-        <section class="hero">
-            <div class="hero-content">
-                <h1>网<br>站</h1>
-                <p>福</p >
-                <a href="#" class="button">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" viewBox="0 0 16 16">
-                        <path d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4"/>
-                    </svg>
-                    ——开始——
-                </a >
-            </div>
-        </section>
+    <script>
+        const audio = document.getElementById('myAudio');
+        const currentTimeElement = document.getElementById('currentTime');
+        const durationElement = document.getElementById('duration');
 
-        <section class="section">
-            <div class="features">
-                <div class="feature">
-                    <div class="feature-icon">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="currentColor" viewBox="0 0 16 16">
-                            <path d="M3 2.5a2.5 2.5 0 0 1 5 0 2.5 2.5 0 0 1 5 0v.006c0 .07 0 .27-.038.494H15a1 1 0 0 1 1 1v1a1 1 0 0 1-1 1H1a1 1 0 0 1-1-1V4a1 1 0 0 1 1-1h2.038A3 3 0 0 1 3 2.506zm1.068.5H7v-.5a1.5 1.5 0 1 0-3 0c0 .085.002.274.045.43zM9 3h2.932l.023-.07c.043-.156.045-.345.045-.43a1.5 1.5 0 0 0-3 0zM1 5v1h14V5H1zm0 3h14v7a1 1 0 0 1-1 1H2a1 1 0 0 1-1-1V8zm3 3a3 3 0 1 1 6 0 3 3 0 0 1-6 0z"/>
-                        </svg>
-                    </div>
-                    <h3>正在测试中</h3>
-                    <p>正在调试，最佳浏览体验</p >
-                </div>
-                <!-- 更多功能区块 -->
-            </div>
-        </section>
-    </main>
+        // 更新时长显示
+        audio.addEventListener('loadedmetadata', function() {
+            const duration = formatTime(audio.duration);
+            durationElement.textContent = `总时长: ${duration}`;
+        });
 
-    <footer>
-       <p>&copy; 2025 测试 保留所有权利</p >
-        <p style="margin-top: 1rem;">返回顶部（失效）</p >
-    </footer>
+        // 更新时间显示
+        audio.addEventListener('timeupdate', function() {
+            currentTimeElement.textContent = `当前时间: ${formatTime(audio.currentTime)}`;
+        });
+
+        // 时间格式化函数
+        function formatTime(seconds) {
+            const minutes = Math.floor(seconds / 60);
+            const remainingSeconds = Math.floor(seconds % 60);
+            return `${minutes}:${remainingSeconds.toString().padStart(2, '0')}`;
+        }
+
+        // 自动显示当前时间
+        function updateClock() {
+            const now = new Date();
+            document.title = `MP3播放器 - ${now.toLocaleTimeString()}`;
+        }
+        setInterval(updateClock, 1000);
+        updateClock();
+    </script>
 </body>
 </html>
